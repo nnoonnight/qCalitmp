@@ -17,11 +17,15 @@ public interface DiaryDao {
 	
 	public void deleteDiary (HashMap<String, Integer> map); 
 	
-	public List<DiaryListCommand> DiaryList(HashMap<String, Object> map);
+	public List<DiaryListCommand> diaryList(HashMap<String, Object> map);
 		
-	public DiaryListCommand DiaryDetail (int diarySeq);
+	public DiaryListCommand diaryDetail (int diarySeq);
 	
 	public void diaryCountup (int diarySeq); 
+	
+	public int diaryListCount (int memberSeq); // 내가 쓴 글 수 
+	
+	public String memberAuth (int memberSeq); //멤버 Auth 상태 체크
 
 	//좋아요 기능 관련
     public int getDiaryLike(DiaryHeartVo vo);

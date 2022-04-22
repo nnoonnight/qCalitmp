@@ -54,5 +54,14 @@ from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{
 		DIARY_COUNT = DIARY_COUNT+1 where DIARY_SEQ = #{diarySeq}
 	</update>
 	
+		<!-- 내가 쓴 글 수 -->
+	<select id="diaryListCount" parameterType="Integer"
+		resultType="Integer">
+		select count(*) from
+		BOARD where MEMBER_SEQ = #{memberSeq}
+
+	</select>
+	
+	
 
 </mapper>

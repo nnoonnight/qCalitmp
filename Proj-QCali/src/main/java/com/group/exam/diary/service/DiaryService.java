@@ -16,12 +16,16 @@ public interface DiaryService {
 	
 	public void deleteDiary (int diarySeq, int memberSeq); 
 	
-	public List<DiaryListCommand> DiaryList(Criteria cri,int memberSeq);
+	public List<DiaryListCommand> diaryList(Criteria cri,int memberSeq);
 		
-	public DiaryListCommand DiaryDetail (int diarySeq);
+	public DiaryListCommand diaryDetail (int diarySeq);
 	
 	public void diaryCountup (int diarySeq); 
 
+	public String memberAuth (int memberSeq);
+	
+	public int diaryListCount(int memberSeq); // 게시글 쓴 글 수
+	
 	//좋아요 기능 관련
 	public void insertDiaryLike(DiaryHeartVo vo);
 	

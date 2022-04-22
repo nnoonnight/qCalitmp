@@ -55,24 +55,30 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	@Override
-	public List<DiaryListCommand> DiaryList(Criteria cri, int memberSeq){
+	public List<DiaryListCommand> diaryList(Criteria cri, int memberSeq){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("memberSeq", memberSeq);
 		map.put("rowStart", cri.getRowStart());
 		map.put("rowEnd", cri.getRowEnd());
-		return diaryDao.DiaryList(map);
+		return diaryDao.diaryList(map);
 	}
 
 	@Override
-	public DiaryListCommand DiaryDetail(int diarySeq) {
-		return diaryDao.DiaryDetail(diarySeq);
+	public DiaryListCommand diaryDetail(int diarySeq) {
+		return diaryDao.diaryDetail(diarySeq);
 	}
 
 	@Override
 	public void diaryCountup(int diarySeq) {
 		diaryDao.diaryCountup(diarySeq);
 
+	}
+	
+	@Override
+	public String memberAuth(int memberSeq) {
+		// TODO Auto-generated method stub
+		return diaryDao.memberAuth(memberSeq);
 	}
 
 	@Override
@@ -93,6 +99,11 @@ public class DiaryServiceImpl implements DiaryService {
 		diaryDao.deleteDiaryLike(vo);
 		diaryDao.updateDiaryLike(vo.getDiarySeq());
 
+	}
+
+	@Override
+	public int diaryListCount(int memberSeq) {
+		return diaryDao.diaryListCount(memberSeq);
 	}
 
 	

@@ -154,24 +154,24 @@ from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ where B.BOARD_SEQ = #{
 	<select id="boardSearch" parameterType="HashMap"
 		resultType="com.group.exam.board.command.BoardlistCommand">
 		
-<if test="">
+<if test="M.MEMBER_NICKNAME">
 		<![CDATA[
 select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ 
 from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
-where ${searchOption} = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
+where M.MEMBER_NICKNAME = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
 		]]>
 </if>
 
-<if test="">
+<if test="B.BOARD_TITLE">
 		<![CDATA[select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ 
 from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
-where ${searchOption} = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
+where B.BOARD_TITLE = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
 		]]>
 </if>
 	</select>

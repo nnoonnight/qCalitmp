@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
-public class DiaryupdateCommand {
+public class DiaryUpdateCommand {
 	
 	private int diarySeq;
 	private int memberSeq;

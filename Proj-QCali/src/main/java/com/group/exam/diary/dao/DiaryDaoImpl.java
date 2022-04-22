@@ -33,13 +33,13 @@ public class DiaryDaoImpl implements DiaryDao {
 	}
 
 	@Override
-	public List<DiaryListCommand> DiaryList(HashMap<String, Object> map) {
+	public List<DiaryListCommand> diaryList(HashMap<String, Object> map) {
 		return sqlSessionTemplate.selectList("diaryList",map);
 	}
 
 
 	@Override
-	public DiaryListCommand DiaryDetail(int diarySeq) {
+	public DiaryListCommand diaryDetail(int diarySeq) {
 		return sqlSessionTemplate.selectOne("diaryDetail", diarySeq);
 	}
 
@@ -48,6 +48,19 @@ public class DiaryDaoImpl implements DiaryDao {
 		sqlSessionTemplate.update("diaryCountup", diarySeq);
 		
 	}
+	
+	@Override
+	public int diaryListCount (int memberSeq) {
+		return sqlSessionTemplate.selectOne("diaryListCount", memberSeq);
+		
+	}
+	
+	@Override
+	public String memberAuth(int memberSeq) {
+		return sqlSessionTemplate.selectOne("memberAuth", memberSeq);
+	}
+	
+	
 	//좋아요 기능 관련
 		@Override
 		public int getDiaryLike(DiaryHeartVo vo) {
