@@ -58,7 +58,7 @@ li {
 
 		<a href="<c:url value='/member/questionAdd'/>"><button>질문 등록하기</button></a>
 		<a href="<c:url value='/member/mypage/confirmPwd?memberSeq=${memberLogin.memberSeq}'/>"><button>마이페이지</button></a>		
-
+		<a href="<c:url value='/diary/list?memberSeq=${memberLogin.memberSeq}'/>"><button>나의 일기장</button></a>	
 	</c:if>
 	
 

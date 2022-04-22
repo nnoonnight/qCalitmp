@@ -72,7 +72,7 @@ public class DiaryController {
 
 		// update
 
-		//int mytotal = diaryService.mylistCount(loginMember.getMemberSeq());
+//		int mytotal = diaryService.mylistCount(loginMember.getMemberSeq());
 
 //		if (mytotal > 10) {
 //			int memberLevel = boardService.memberLevelup(loginMember.getMemberSeq(), mytotal,
@@ -94,7 +94,7 @@ public class DiaryController {
 //			}
 //		}
 
-		return "redirect:/diary/list";
+		return "redirect:/diary/list?memberSeq="+loginMember.getMemberSeq();
 	}
 	
 	

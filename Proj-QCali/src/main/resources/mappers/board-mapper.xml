@@ -16,7 +16,6 @@
 		<id property="mSeq" column="member_seq" />
 		<id property="bContent" column="board_content" />
 	</resultMap>
-
 	<resultMap
 		type="com.group.exam.board.command.QuestionAdayCommand"
 		id="questionCommand">
@@ -50,12 +49,12 @@
 
 	<!-- 전체 게시글 -->
 	<select id="boardlist" parameterType="com.group.exam.utils.Criteria"
-		resultType="com.group.examZ.command.BoardlistCommand">
+		resultType="com.group.exam.board.command.BoardlistCommand">
 	
 <![CDATA[select *
 from (select ROWNUM rn, B.BOARD_SEQ, B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY,
 B.BOARD_LIKE, B.BOARD_COUNT, M.MEMBER_NICKNAME, M.MEMBER_SEQ  
-from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ )
+from MEMBER M right join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ )
 where rn between #{rowStart} and #{rowEnd} ]]>
 	</select>
 
@@ -90,18 +89,18 @@ select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ 
-from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
+from MEMBER M right join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
 where M.member_seq = #{memberSeq}) where rn between #{rowStart} and #{rowEnd}
 		]]>
 
 	</select>
 
-	<!-- 게시글 디테일 / 댓글 테이블 추가 해야함 -->
+	<!-- 게시글 디테일  -->
 	<select id="boardlistDetail" parameterType="Integer"
 		resultType="com.group.exam.board.command.BoardlistCommand">
 
 		<![CDATA[select B.BOARD_SEQ, B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, M.MEMBER_NICKNAME, M.MEMBER_SEQ, B.BOARD_CONTENT
-from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ where B.BOARD_SEQ = #{boardSeq}]]>
+from MEMBER M right join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ where B.BOARD_SEQ = #{boardSeq}]]>
 
 	</select>
 
@@ -160,7 +159,7 @@ select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ 
-from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
+from MEMBER M right join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
 where M.MEMBER_NICKNAME = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
 		]]>
 </if>
@@ -170,8 +169,8 @@ where M.MEMBER_NICKNAME = #{searchWord}) where rn between #{rowStart} and #{rowE
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ 
-from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
-where B.BOARD_TITLE = #{searchWord}) where rn between #{rowStart} and #{rowEnd}
+from MEMBER M right join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ 
+where B.BOARD_TITLE like '%'||#{searchWord}||'%') where rn between #{rowStart} and #{rowEnd}
 		]]>
 </if>
 	</select>

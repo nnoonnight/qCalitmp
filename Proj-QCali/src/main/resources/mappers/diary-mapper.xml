@@ -5,7 +5,7 @@
 <mapper namespace="DiaryDao">
 
 
-	<insert id="insertDiary" parameterType="diaryVo">
+	<insert id="insertDiary" parameterType="com.group.exam.diary.vo.DiaryVo">
 		insert into DIARY
 		(DIARY_SEQ, DIARY_TITLE, DIARY_CONTENT,DIARY_REG_DAY, DIARY_OPEN, MEMBER_SEQ,)
 		values
@@ -40,7 +40,7 @@ where M.member_seq = #{memberSeq}) where rn between #{rowStart} and #{rowEnd}
 
 
 	<select id="diaryDetail" parameterType="Integer"
-		resultType="com.group.exam.diary.command.DiarylistCommand">
+		resultType="com.group.exam.diary.command.DiaryListCommand">
 
 <![CDATA[select D.DIARY_SEQ, D.DIARY_TITLE, to_char(D.DAIRY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY,D.DIARY_LIKE, D.DAIARY_COUNT, D.DIARY_CONTENT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ
