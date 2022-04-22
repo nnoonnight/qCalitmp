@@ -154,7 +154,7 @@ from MEMBER M join BOARD B on M.MEMBER_SEQ = B.MEMBER_SEQ where B.BOARD_SEQ = #{
 	<select id="boardSearch" parameterType="HashMap"
 		resultType="com.group.exam.board.command.BoardlistCommand">
 		
-<if test="M.MEMBER_NICKNAME">
+<if test="searchOption == 'M.MEMBER_NICKNAME'">
 		<![CDATA[
 select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
@@ -165,7 +165,7 @@ where M.MEMBER_NICKNAME = #{searchWord}) where rn between #{rowStart} and #{rowE
 		]]>
 </if>
 
-<if test="B.BOARD_TITLE">
+<if test="searchOption == 'B.BOARD_TITLE'">
 		<![CDATA[select *
 from (select ROWNUM rn, B.BOARD_SEQ, 
 B.BOARD_TITLE, to_char(B.BOARD_REG_DAY, 'yyyy.mm.dd') BOARD_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT, 
