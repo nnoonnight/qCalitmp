@@ -125,7 +125,7 @@ li {
 					</li>
 				</c:if>
 			</ul>
-		</div>
+		</div> 
 
 
 	</table>

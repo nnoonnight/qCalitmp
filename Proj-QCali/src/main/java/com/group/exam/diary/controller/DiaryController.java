@@ -2,6 +2,7 @@ package com.group.exam.diary.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -11,11 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.group.exam.board.command.BoardlistCommand;
 import com.group.exam.board.vo.BoardVo;
 import com.group.exam.diary.command.DiaryListCommand;
 import com.group.exam.diary.command.DiaryUpdateCommand;
@@ -41,30 +42,49 @@ public class DiaryController {
 		this.memberService = memberService;
 	}
 	
-	@GetMapping(value = "/write")
-	public String insertDiary(@ModelAttribute("diaryData") DiaryVo diaryVo, HttpSession session) {
+	@GetMapping(value = "/write/{memberSeq}")
+	public String insertDiary(@PathVariable int memberSeq, @ModelAttribute("diaryData") DiaryVo diaryVo, HttpSession session) {
+		LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
+		
+		//login seq 와 요청된(작성)seq 비교
+		if (memberSeq != loginMember.getMemberSeq()) {
 
+			return "errors/memberAuthErrorDiary";
+		}
 		return "diary/writeForm";
 	}
 
-	@PostMapping(value = "/write")
-	public String insertBoard(@Valid @ModelAttribute("boardData") DiaryVo diaryVo, BindingResult bindingResult,
-			Criteria cri, HttpSession session, Model model) {
+	@PostMapping(value = "/write/{memberSeq}")
+	public String insertDiary(@PathVariable int memberSeq, @Valid @ModelAttribute("diaryData") DiaryVo diaryVo, BindingResult bindingResult,
+			Criteria cri, HttpSession session, Model model, HttpServletRequest request) {
+		LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
+		
+		
+		
+		//login seq 와 요청된(작성)seq 비교
+		if (memberSeq != loginMember.getMemberSeq()) {
+
+			return "errors/memberAuthErrorDiary";
+		}
+		
+		
 		// not null 체크
 		if (bindingResult.hasErrors()) {
 
 			return "diary/writeForm";
 		}
 
-		LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
 
 		boolean memberAuth = diaryService.memberAuth(loginMember.getMemberSeq()).equals("F");
 		if (memberAuth == true) {
 			return "errors/memberAuthError"; // 이메일 인증 x -> 예외 페이지
 
 		}
-
-		// 세션에서 멤버의 mSeq 를 boardVo에 셋팅
+		String diaryOpen = request.getParameter("open");
+		System.out.println(diaryOpen);
+		//공개여부 세팅
+		diaryVo.setDiaryOpen(diaryOpen);
+		// 세션에서 멤버의 mSeq 를 diaryVo에 셋팅
 		diaryVo.setMemberSeq(loginMember.getMemberSeq());
 
 		// insert
@@ -94,26 +114,27 @@ public class DiaryController {
 //			}
 //		}
 
-		return "redirect:/diary/list?memberSeq="+loginMember.getMemberSeq();
+		return "redirect:/diary/list/"+ loginMember.getMemberSeq();
 	}
 	
 	
 	// 해당list 내 글 모아보기
-		@GetMapping(value = "/list")
-		public String boardListMy(@RequestParam("memberSeq") int memberSeq, Model model, Criteria cri,
+		@GetMapping(value = "/list/{memberSeq}")
+		public String boardListMy(@PathVariable int memberSeq, Model model, Criteria cri,
 				HttpSession session) {
 
 			int total = diaryService.diaryListCount(memberSeq);
 
 			List<DiaryListCommand> list = diaryService.diaryList(cri, memberSeq);
-			model.addAttribute("boardList", list);
+			model.addAttribute("diaryList", list);
 
 			PaginVo pageCommand = new PaginVo();
 			pageCommand.setCri(cri);
 			pageCommand.setTotalCount(total);
-			model.addAttribute("boardTotal", total);
+			model.addAttribute("diaryTotal", total);
 			model.addAttribute("pageMaker", pageCommand);
 
+			model.addAttribute("testMemberSeq", memberSeq);
 			return "diary/list";
 		}
 	
@@ -197,7 +218,7 @@ public class DiaryController {
 
 		// 게시글 삭제
 		@GetMapping(value = "/delete")
-		public String diaryDelect(@RequestParam int diarySeq, Model model, HttpSession session, Criteria cri) {
+		public String diaryDelete(@RequestParam int diarySeq, Model model, HttpSession session, Criteria cri) {
 
 			// 세션 값 loginMember에 저장
 			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");

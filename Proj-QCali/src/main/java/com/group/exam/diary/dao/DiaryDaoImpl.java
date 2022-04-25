@@ -19,7 +19,7 @@ public class DiaryDaoImpl implements DiaryDao {
 
 	@Override
 	public void insertDiary(DiaryVo diaryVo) {
-		sqlSessionTemplate.insert("insertDaity", diaryVo);
+		sqlSessionTemplate.insert("insertDiary", diaryVo);
 	}
 
 	@Override

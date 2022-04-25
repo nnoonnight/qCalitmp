@@ -50,10 +50,15 @@ li {
 			</tr>
 		</table>
 		<a href="<c:url value='/member/logout'/>"><button>로그아웃</button></a>
-		<a href="<c:url value='/diary/write'/>"><button>글쓰기</button></a>
+		memberLogin.memberSeq = ${memberLogin.memberSeq}
+		testMemberSeq = ${testMemberSeq}
 	
-		<a
-			href="<c:url value='/diary/list?memberSeq=${memberLogin.memberSeq}'/>"><button>내 일기 모아보기</button></a>
+		<c:set var ="memberLogin.memberSeq" value="${memberLogin.memberSeq}"/>
+		<c:set var ="testMemberSeq" value="${testMemberSeq}"/>
+		<c:if test="${memberLogin.memberSeq == testMemberSeq}">
+		<a href="<c:url value='/diary/write/${memberLogin.memberSeq}'/>"><button>글쓰기</button></a>
+		</c:if>
+		
 
 
 	</c:if>
@@ -98,12 +103,18 @@ li {
 					<td>${list.diaryRegday}</td>
 					<td>${list.diaryLike}</td>
 					<td>${list.diaryCount}</td>
-					<td>${list.memberSeq}</td>
+
+					
+					<c:if test="${memberLogin.memberSeq != testMemberSeq}" >
+					<c:if test="${list.diaryOpen eq 'F' }" >
+					<td colspan="5">비공개 글입니다.</td>
+					</c:if>
+					</c:if>
+					
 				</tr>
-
 			</c:forEach>
-
 		</c:if>
+		
 		<div>
 			<ul>
 				<c:if test="${pageMaker.prev }">

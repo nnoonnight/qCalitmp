@@ -7,7 +7,7 @@
 
 	<insert id="insertDiary" parameterType="com.group.exam.diary.vo.DiaryVo">
 		insert into DIARY
-		(DIARY_SEQ, DIARY_TITLE, DIARY_CONTENT,DIARY_REG_DAY, DIARY_OPEN, MEMBER_SEQ,)
+		(DIARY_SEQ, DIARY_TITLE, DIARY_CONTENT,DIARY_REG_DAY, DIARY_OPEN, MEMBER_SEQ)
 		values
 		(DIARY_SEQ.nextval, #{diaryTitle}, #{diaryContent}, SYSDATE, #{diaryOpen},
 		(select MEMBER_SEQ from MEMBER where MEMBER_SEQ = #{memberSeq}) )
@@ -25,13 +25,13 @@
 	</delete>
 
 	<!-- memberseq 의 게시글 목록 -->
-	<select id="DiaryList" parameterType="com.group.exam.utils.Criteria"
+	<select id="diaryList" parameterType="com.group.exam.utils.Criteria"
 		resultType="com.group.exam.diary.command.DiaryListCommand">
 	
 <![CDATA[select *
 from (select ROWNUM rn, D.DIARY_SEQ,
-D.DIARY_TITLE, to_char(D.DAIRY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY, B.BOARD_LIKE, B.BOARD_COUNT,
-D.DIRAY_OPEN, M.MEMBER_NICKNAME, M.MEMBER_SEQ  
+D.DIARY_TITLE, to_char(D.DIARY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY, D.DIARY_LIKE, D.DIARY_COUNT,
+D.DIARY_OPEN, M.MEMBER_NICKNAME, M.MEMBER_SEQ  
 from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ 
 where M.member_seq = #{memberSeq}) where rn between #{rowStart} and #{rowEnd}
 ]]>
@@ -42,7 +42,7 @@ where M.member_seq = #{memberSeq}) where rn between #{rowStart} and #{rowEnd}
 	<select id="diaryDetail" parameterType="Integer"
 		resultType="com.group.exam.diary.command.DiaryListCommand">
 
-<![CDATA[select D.DIARY_SEQ, D.DIARY_TITLE, to_char(D.DAIRY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY,D.DIARY_LIKE, D.DAIARY_COUNT, D.DIARY_CONTENT, 
+<![CDATA[select D.DIARY_SEQ, D.DIARY_TITLE, to_char(D.DIARY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY,D.DIARY_LIKE, D.DIARY_COUNT, D.DIARY_CONTENT, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ
 from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{diarySeq}]]>
 
@@ -58,7 +58,7 @@ from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{
 	<select id="diaryListCount" parameterType="Integer"
 		resultType="Integer">
 		select count(*) from
-		BOARD where MEMBER_SEQ = #{memberSeq}
+		DIARY where MEMBER_SEQ = #{memberSeq}
 
 	</select>
 	

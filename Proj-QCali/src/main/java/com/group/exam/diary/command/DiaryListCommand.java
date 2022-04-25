@@ -7,7 +7,7 @@ public class DiaryListCommand {
 	private int diarySeq;
 	private String diaryTitle;
 	private String diaryContent;
-	private Date diaryRegday;
+	private String diaryRegday;
 	private String diaryOpen;
 	private int memberSeq;
 	private String memberNickname;
@@ -48,10 +48,10 @@ public class DiaryListCommand {
 	public void setDiaryContent(String diaryContent) {
 		this.diaryContent = diaryContent;
 	}
-	public Date getDiaryRegday() {
+	public String getDiaryRegday() {
 		return diaryRegday;
 	}
-	public void setDiaryRegday(Date diaryRegday) {
+	public void setDiaryRegday(String diaryRegday) {
 		this.diaryRegday = diaryRegday;
 	}
 	public String getDiaryOpen() {
