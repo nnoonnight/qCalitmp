@@ -56,7 +56,7 @@ li {
 		<c:set var ="memberLogin.memberSeq" value="${memberLogin.memberSeq}"/>
 		<c:set var ="testMemberSeq" value="${testMemberSeq}"/>
 		<c:if test="${memberLogin.memberSeq == testMemberSeq}">
-		<a href="<c:url value='/diary/write/${memberLogin.memberSeq}'/>"><button>글쓰기</button></a>
+		<a href="<c:url value='/diary/write/${memberLogin.memberSeq}'/>"><button>일기쓰기</button></a>
 		</c:if>
 		
 
@@ -93,7 +93,7 @@ li {
 				
 				<tr>
 					<td>${list.diarySeq}</td>
-
+					<c:if test="${memberLogin.memberSeq == testMemberSeq}" >
 					<td><a href="<c:url value='/diary/detail?diarySeq=${list.diarySeq}'/>">${list.diaryTitle}</a>
 
 					</td>
@@ -103,14 +103,21 @@ li {
 					<td>${list.diaryRegday}</td>
 					<td>${list.diaryLike}</td>
 					<td>${list.diaryCount}</td>
-
+					</c:if>
 					
 					<c:if test="${memberLogin.memberSeq != testMemberSeq}" >
 					<c:if test="${list.diaryOpen eq 'F' }" >
 					<td colspan="5">비공개 글입니다.</td>
 					</c:if>
+					<c:if test="${list.diaryOpen eq 'T' }" >
+						<td><a href="<c:url value='/diary/detail?diarySeq=${list.diarySeq}'/>">${list.diaryTitle}</a>
+					</td>
+					<td>${list.memberNickname}</td>
+					<td>${list.diaryRegday}</td>
+					<td>${list.diaryLike}</td>
+					<td>${list.diaryCount}</td>
 					</c:if>
-					
+					</c:if>					
 				</tr>
 			</c:forEach>
 		</c:if>

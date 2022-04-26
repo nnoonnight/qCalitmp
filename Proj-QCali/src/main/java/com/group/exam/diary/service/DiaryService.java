@@ -12,7 +12,7 @@ public interface DiaryService {
 
 	public void insertDiary (DiaryVo diaryVo); 
 	
-	public void updateDiary (String diaryTitle, String diaryContent, int diarySeq);
+	public void updateDiary (String diaryTitle, String diaryContent, int diarySeq, String diaryOpen);
 	
 	public void deleteDiary (int diarySeq, int memberSeq); 
 	

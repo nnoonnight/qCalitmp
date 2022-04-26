@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.exam.board.vo.BoardVo;
+import com.group.exam.diary.command.DiaryLikeCommand;
 import com.group.exam.diary.command.DiaryListCommand;
 import com.group.exam.diary.command.DiaryUpdateCommand;
 import com.group.exam.diary.service.DiaryService;
@@ -81,7 +84,7 @@ public class DiaryController {
 
 		}
 		String diaryOpen = request.getParameter("open");
-		System.out.println(diaryOpen);
+	
 		//공개여부 세팅
 		diaryVo.setDiaryOpen(diaryOpen);
 		// 세션에서 멤버의 mSeq 를 diaryVo에 셋팅
@@ -173,47 +176,96 @@ public class DiaryController {
 			int diarylike = diaryService.getDiaryLike(likeVo);
 
 			model.addAttribute("diaryHeart", diarylike);
-
-			return "diary/Detail";
+			System.out.println(list);
+			return "diary/detail";
 		}
 	
 	
-		// 게시글 수정
-		@GetMapping(value = "/edit")
-		public String diaryEdit(@ModelAttribute("diaryEditData") BoardVo boardVo, HttpSession session, Model model) {
+		@PostMapping(value = "/heart", produces = "application/json")
+		@ResponseBody
+		public int boardLike(@RequestBody DiaryLikeCommand command, HttpSession session) {
 
+			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
+
+			DiaryHeartVo likeVo = new DiaryHeartVo();
+
+			likeVo.setDiarySeq(command.getDiarySeq());
+			likeVo.setMemberSeq(loginMember.getMemberSeq());
+
+			if (command.getHeart() >= 1) {
+				diaryService.deleteDiaryLike(likeVo);
+				command.setHeart(0);
+			} else {
+
+				diaryService.insertDiaryLike(likeVo);
+				command.setHeart(1);
+			}
+
+			// String result = Integer.toString(heart);
+
+			return command.getHeart();
+
+		}
+
+		
+		
+		
+		// 게시글 수정
+		@GetMapping(value = "/edit/{diarySeqTest}")
+		public String diaryEdit(@PathVariable int diarySeqTest, @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, Model model, HttpSession session) {
+
+//			//login seq 와 요청된(작성)seq 비교
+//			if (diarySeqTest != updateCommand.getDiarySeq()) {
+//
+//				return "errors/memberAuthErrorDiary";
+//			}
+//			
 			return "diary/editForm";
 		}
 
 		// 게시글 수정
-		@PostMapping(value = "/edit")
-		public String diaryEdit(@Valid @ModelAttribute("diaryEditData") DiaryUpdateCommand updateCommand,
-				BindingResult bindingResult, Model model, HttpSession session) {
+		@PostMapping(value = "/edit/{diarySeqTest}")
+		public String diaryEdit(@PathVariable int diarySeqTest, @Valid @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, Model model,
+				BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
 
+			
+			//login seq 와 요청된(작성)seq 비교
+			if (diarySeqTest != updateCommand.getDiarySeq()) {
+
+				return "errors/memberAuthErrorDiary";
+			}
+			
+			
 			if (bindingResult.hasErrors()) {
 
 				return "diary/editForm";
 			}
 
+			String diaryOpen = request.getParameter("open");		
+			//공개여부 세팅
+			updateCommand.setDiaryOpen(diaryOpen);
+			
+			System.out.println(updateCommand);
+			
 			// 세션 값 loginMember에 저장
 			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
 
 			if (loginMember != null) {
-				// 세션에서 멤버의 mSeq 를 boardVo에 셋팅
+				// 세션에서 멤버의 mSeq 를 diaryVo에 셋팅
 
 				int diarySeq = updateCommand.getDiarySeq();
 
 				DiaryListCommand list = diaryService.diaryDetail(diarySeq);
 
 				model.addAttribute("diaryList", list);
-				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeq);
+				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeq, updateCommand.getDiaryOpen());
 				System.out.println(" 수정 성공");
 			} else {
 				System.out.println("수정 실패");
 				return "errors/mypageChangeError";
 			}
 
-			return "redirect:/diary/list";
+			return "diary/list";
 		}
 
 		// 게시글 삭제

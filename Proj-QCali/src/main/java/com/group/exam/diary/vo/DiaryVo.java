@@ -7,26 +7,11 @@ public class DiaryVo {
 	private int diarySeq;
 	private String diaryTitle;
 	private String diaryContent;
-	private Date diaryRegday;
+	private String diaryRegday;
 	private String diaryOpen;
 	private int memberSeq;
 	private int diaryLike;
 	private int diaryCount;
-	
-	
-	
-	public int getDiaryLike() {
-		return diaryLike;
-	}
-	public void setDiaryLike(int diaryLike) {
-		this.diaryLike = diaryLike;
-	}
-	public int getDiaryCount() {
-		return diaryCount;
-	}
-	public void setDiaryCount(int diaryCount) {
-		this.diaryCount = diaryCount;
-	}
 	public int getDiarySeq() {
 		return diarySeq;
 	}
@@ -45,10 +30,10 @@ public class DiaryVo {
 	public void setDiaryContent(String diaryContent) {
 		this.diaryContent = diaryContent;
 	}
-	public Date getDiaryRegday() {
+	public String getDiaryRegday() {
 		return diaryRegday;
 	}
-	public void setDiaryRegday(Date diaryRegday) {
+	public void setDiaryRegday(String diaryRegday) {
 		this.diaryRegday = diaryRegday;
 	}
 	public String getDiaryOpen() {
@@ -63,6 +48,21 @@ public class DiaryVo {
 	public void setMemberSeq(int memberSeq) {
 		this.memberSeq = memberSeq;
 	}
+	public int getDiaryLike() {
+		return diaryLike;
+	}
+	public void setDiaryLike(int diaryLike) {
+		this.diaryLike = diaryLike;
+	}
+	public int getDiaryCount() {
+		return diaryCount;
+	}
+	public void setDiaryCount(int diaryCount) {
+		this.diaryCount = diaryCount;
+	}
+	
+	
+	
 	
 	
 	

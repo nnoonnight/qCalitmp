@@ -72,6 +72,13 @@ public class DiaryListCommand {
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
 	}
+	@Override
+	public String toString() {
+		return "DiaryListCommand [diarySeq=" + diarySeq + ", diaryTitle=" + diaryTitle + ", diaryContent="
+				+ diaryContent + ", diaryRegday=" + diaryRegday + ", diaryOpen=" + diaryOpen + ", memberSeq="
+				+ memberSeq + ", memberNickname=" + memberNickname + ", diaryLike=" + diaryLike + ", diaryCount="
+				+ diaryCount + "]";
+	}
 
 	
 	

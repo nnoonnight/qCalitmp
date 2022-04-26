@@ -31,11 +31,12 @@ public class DiaryServiceImpl implements DiaryService {
 
 	
 	@Override
-	public void updateDiary(String diaryTitle, String diaryContent, int diarySeq) {
+	public void updateDiary(String diaryTitle, String diaryContent, int diarySeq, String diaryOpen) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("diaryTitle", diaryTitle);
 		map.put("diaryContent", diaryContent);
 		map.put("diarySeq", diarySeq);
+		map.put("diaryOpen", diaryOpen);
 		
 		diaryDao.updateDiary(map);
 		

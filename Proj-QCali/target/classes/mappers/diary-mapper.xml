@@ -15,7 +15,7 @@
 	
 	<update id="updateDiary" parameterType="HashMap">
 		update DIARY set
-		DIARY_TITLE = #{diaryTitle}, DIARY_CONTENT = #{diaryContent} where DIARY_SEQ =
+		DIARY_TITLE = #{diaryTitle}, DIARY_CONTENT = #{diaryContent}, DIARY_OPEN = #{diaryOpen} where DIARY_SEQ =
 		#{diarydSeq}
 	</update>
 
@@ -42,7 +42,7 @@ where M.member_seq = #{memberSeq}) where rn between #{rowStart} and #{rowEnd}
 	<select id="diaryDetail" parameterType="Integer"
 		resultType="com.group.exam.diary.command.DiaryListCommand">
 
-<![CDATA[select D.DIARY_SEQ, D.DIARY_TITLE, to_char(D.DIARY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY,D.DIARY_LIKE, D.DIARY_COUNT, D.DIARY_CONTENT, 
+<![CDATA[select D.DIARY_SEQ, D.DIARY_TITLE, to_char(D.DIARY_REG_DAY, 'yyyy.mm.dd') DIARY_REG_DAY,D.DIARY_LIKE, D.DIARY_COUNT, D.DIARY_CONTENT, D.DIARY_OPEN, 
 M.MEMBER_NICKNAME, M.MEMBER_SEQ
 from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{diarySeq}]]>
 
@@ -62,6 +62,25 @@ from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{
 
 	</select>
 	
+	<!-- 좋아요 -->
+	
+	<insert id="createLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
+		insert into HEART (HEART_SEQ, DIARY_SEQ, MEMBER_SEQ) values (H_SEQ.NEXTVAL, #{diarySeq}, #{memberSeq})
+	
+	</insert>
+	
+	<delete id="deleteLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
+		delete from HEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq} 
+	</delete>
+	
+	
+	<update id="updateLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
+		update DIARY set DIARY_LIKE = (select count(*) from HEART where DIARY_SEQ = #{diarySeq}) where DIARY_SEQ = #{diarySeq}
+	</update>
+	
+	<select id="getLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo" resultType="Integer">
+		select count(HEART_SEQ) from HEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq}
+	</select>
 	
 
 </mapper>

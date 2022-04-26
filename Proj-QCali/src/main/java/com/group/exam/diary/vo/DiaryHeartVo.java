@@ -29,6 +29,7 @@ public class DiaryHeartVo {
 		return "DiaryHeartVo [heartSeq=" + heartSeq + ", diarySeq=" + diarySeq + ", memberSeq=" + memberSeq + "]";
 	}
 	
+
 	
 	
 	

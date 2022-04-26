@@ -65,27 +65,27 @@ public class DiaryDaoImpl implements DiaryDao {
 		@Override
 		public int getDiaryLike(DiaryHeartVo vo) {
 			// TODO Auto-generated method stub
-			return sqlSessionTemplate.selectOne("getLike", vo);
+			return sqlSessionTemplate.selectOne("getLikeDiary", vo);
 		}
 
 		@Override
 		public void insertDiaryLike(DiaryHeartVo vo) {
 			// TODO Auto-generated method stub
-			sqlSessionTemplate.insert("createLike", vo);
+			sqlSessionTemplate.insert("createLikeDiary", vo);
 			
 		}
 
 		@Override
 		public void deleteDiaryLike(DiaryHeartVo vo) {
 			// TODO Auto-generated method stub
-			sqlSessionTemplate.delete("deleteLike", vo);
+			sqlSessionTemplate.delete("deleteLikeDiary", vo);
 			
 		}
 
 		@Override
 		public void updateDiaryLike(int diarySeq) {
 			// TODO Auto-generated method stub
-			sqlSessionTemplate.update("updateLike", diarySeq);
+			sqlSessionTemplate.update("updateLikeDiary", diarySeq);
 			
 		}
 

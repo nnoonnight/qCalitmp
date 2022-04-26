@@ -12,6 +12,7 @@ public class DiaryUpdateCommand {
 	private String diaryTitle;
 	@NotEmpty(message="내용을 입력해 주세요")
 	private String diaryContent;
+	private String diaryOpen;
 	public int getDiarySeq() {
 		return diarySeq;
 	}
@@ -36,7 +37,20 @@ public class DiaryUpdateCommand {
 	public void setDiaryContent(String diaryContent) {
 		this.diaryContent = diaryContent;
 	}
-
+	public String getDiaryOpen() {
+		return diaryOpen;
+	}
+	public void setDiaryOpen(String diaryOpen) {
+		this.diaryOpen = diaryOpen;
+	}
+	@Override
+	public String toString() {
+		return "DiaryUpdateCommand [diarySeq=" + diarySeq + ", memberSeq=" + memberSeq + ", diaryTitle=" + diaryTitle
+				+ ", diaryContent=" + diaryContent + ", diaryOpen=" + diaryOpen + "]";
+	}
+	
+	
+	
 	
 	
 
