@@ -2,10 +2,14 @@ package com.group.exam.diary.vo;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class DiaryVo {
 	
 	private int diarySeq;
+	@NotEmpty(message="제목을 입력해주세요.")
 	private String diaryTitle;
+	@NotEmpty(message="내용을 입력해주세요.")
 	private String diaryContent;
 	private String diaryRegday;
 	private String diaryOpen;

@@ -26,6 +26,8 @@ public interface DiaryDao {
 	public int diaryListCount (int memberSeq); // 내가 쓴 글 수 
 	
 	public String memberAuth (int memberSeq); //멤버 Auth 상태 체크
+	
+	public String diaryNickname (int memberSeq); //닉네임 표시용
 
 	//좋아요 기능 관련
     public int getDiaryLike(DiaryHeartVo vo);

@@ -109,7 +109,7 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.boardMylistCount(memberSeq);
 	}
 
-
+	
 	@Override
 	public void insertBoardLike(BoardHeartVo vo) {
 		// TODO Auto-generated method stub

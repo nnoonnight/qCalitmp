@@ -36,6 +36,8 @@ public interface BoardService {
 	
 	public List<BoardlistCommand> boardSearch (HashMap<String, Object> map);//닉네임, 제목으로 검색
 	
+
+	
 	//하루마다 질문 출력
 	
 	public QuestionAdayCommand questionselect(int num);
@@ -43,7 +45,6 @@ public interface BoardService {
 	public int getSequence();
 	
 	public int currentSequence();
-	
 	
 	//좋아요 기능 관련
 	public void insertBoardLike(BoardHeartVo vo);

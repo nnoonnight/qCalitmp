@@ -60,6 +60,10 @@ public class DiaryDaoImpl implements DiaryDao {
 		return sqlSessionTemplate.selectOne("memberAuth", memberSeq);
 	}
 	
+	@Override
+	public String diaryNickname (int memberSeq) {
+		return sqlSessionTemplate.selectOne("diaryNickname", memberSeq);
+	}
 	
 	//좋아요 기능 관련
 		@Override

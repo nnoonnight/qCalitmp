@@ -81,6 +81,11 @@ public class DiaryServiceImpl implements DiaryService {
 		// TODO Auto-generated method stub
 		return diaryDao.memberAuth(memberSeq);
 	}
+	
+	@Override
+	public String diaryNickname (int memberSeq) {
+		return diaryDao.diaryNickname(memberSeq);
+	}
 
 	@Override
 	public int getDiaryLike(DiaryHeartVo vo) {

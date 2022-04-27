@@ -26,6 +26,8 @@ public interface DiaryService {
 	
 	public int diaryListCount(int memberSeq); // 게시글 쓴 글 수
 	
+	public String diaryNickname (int memberSeq); //닉네임 표시용
+	
 	//좋아요 기능 관련
 	public void insertDiaryLike(DiaryHeartVo vo);
 	

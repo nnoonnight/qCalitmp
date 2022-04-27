@@ -86,7 +86,6 @@
 
 
 
-
 			<c:if test="${myArticle == true}">
 
 				<a href="<c:url value='/board/edit?boardSeq=${list.boardSeq}'/>"><button>글

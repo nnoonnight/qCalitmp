@@ -38,24 +38,30 @@
 		<a href="<c:url value='/member/logout'/>"><button>로그아웃</button></a>
 	</c:if>
 	<form:form commandName="DiaryUpdateCommand">
-		<table border="1">
+		<table border="1" >
 			<tr>
 				<td>제목</td>
-				<td><form:input path="diaryTitle" placeholder="8자리 숫자 입력" /> 
+				<td><form:input path="diaryTitle" value="${diaryList.diaryTitle }"/> 
 				<form:errors path="diaryTitle" /></td>
 
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><form:textarea path="diaryContent" label="${ diaryContent}" /> 
+				<td><textarea name="diaryContent">${diaryList.diaryContent}</textarea> 
 				<form:errors path="diaryContent" /></td>
 
 			</tr>
 			<tr>
 				<td>공개여부</td>
 				<td>
+				<c:if test="${diaryList.diaryOpen == 'T' }">
 					<input type="radio" name="open" value="T" checked/>공개 
-					<input type="radio" name="open" value="F" />비공개				
+					<input type="radio" name="open" value="F" />비공개	
+				</c:if>	
+				<c:if test="${diaryList.diaryOpen == 'F' }">
+					<input type="radio" name="open" value="T" />공개 
+					<input type="radio" name="open" value="F" checked/>비공개	
+				</c:if>			
 				</td>
 
 			</tr>

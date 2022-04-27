@@ -130,7 +130,10 @@ public class DiaryController {
 
 			List<DiaryListCommand> list = diaryService.diaryList(cri, memberSeq);
 			model.addAttribute("diaryList", list);
-
+	
+			String diaryNickname = diaryService.diaryNickname(memberSeq);
+			
+			model.addAttribute("diaryNickname", diaryNickname);
 			PaginVo pageCommand = new PaginVo();
 			pageCommand.setCri(cri);
 			pageCommand.setTotalCount(total);
@@ -219,53 +222,53 @@ public class DiaryController {
 //
 //				return "errors/memberAuthErrorDiary";
 //			}
-//			
-			return "diary/editForm";
+			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
+			DiaryListCommand list = diaryService.diaryDetail(diarySeqTest);
+			if(loginMember.getMemberSeq()==list.getMemberSeq()) {
+				model.addAttribute("diaryList", list);
+				return "diary/editForm";				
+			}else {
+				return "errors/memberAuthErrorDiary";
+			}
 		}
 
 		// 게시글 수정
 		@PostMapping(value = "/edit/{diarySeqTest}")
-		public String diaryEdit(@PathVariable int diarySeqTest, @Valid @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, Model model,
-				BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
-
-			
-			//login seq 와 요청된(작성)seq 비교
-			if (diarySeqTest != updateCommand.getDiarySeq()) {
-
-				return "errors/memberAuthErrorDiary";
-			}
-			
-			
+		public String diaryEdit(@PathVariable int diarySeqTest, @Valid @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, BindingResult bindingResult,Model model,
+				 HttpSession session, HttpServletRequest request) {			
 			if (bindingResult.hasErrors()) {
 
 				return "diary/editForm";
-			}
-
-			String diaryOpen = request.getParameter("open");		
-			//공개여부 세팅
-			updateCommand.setDiaryOpen(diaryOpen);
-			
-			System.out.println(updateCommand);
+			}		
 			
 			// 세션 값 loginMember에 저장
 			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
 
 			if (loginMember != null) {
-				// 세션에서 멤버의 mSeq 를 diaryVo에 셋팅
+				
+				//공개여부 세팅
+				String diaryOpen = request.getParameter("open");		
+				updateCommand.setDiaryOpen(diaryOpen);
 
-				int diarySeq = updateCommand.getDiarySeq();
+				//content 세팅
+				String diaryContent = request.getParameter("diaryContent");
+				updateCommand.setDiaryContent(diaryContent);
+			
 
-				DiaryListCommand list = diaryService.diaryDetail(diarySeq);
-
-				model.addAttribute("diaryList", list);
-				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeq, updateCommand.getDiaryOpen());
+//
+//				DiaryListCommand list = diaryService.diaryDetail(diarySeq);
+//
+//				model.addAttribute("diaryList", list);
+				
+				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeqTest, updateCommand.getDiaryOpen());
+				System.out.println("업데이트 커맨드~!~!~!~!~"+updateCommand);
 				System.out.println(" 수정 성공");
 			} else {
 				System.out.println("수정 실패");
 				return "errors/mypageChangeError";
 			}
 
-			return "diary/list";
+			return "redirect:/diary/list/"+ loginMember.getMemberSeq();
 		}
 
 		// 게시글 삭제
@@ -285,7 +288,7 @@ public class DiaryController {
 				return "errors/mypageChangeError";
 			}
 
-			return "redirect:/diary/list";
+			return "redirect:/diary/list/"+ loginMember.getMemberSeq();
 		}
 
 	

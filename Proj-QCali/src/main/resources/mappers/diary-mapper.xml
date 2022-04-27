@@ -15,8 +15,7 @@
 	
 	<update id="updateDiary" parameterType="HashMap">
 		update DIARY set
-		DIARY_TITLE = #{diaryTitle}, DIARY_CONTENT = #{diaryContent}, DIARY_OPEN = #{diaryOpen} where DIARY_SEQ =
-		#{diarydSeq}
+		DIARY_TITLE = #{diaryTitle}, DIARY_CONTENT = #{diaryContent}, DIARY_OPEN = #{diaryOpen} where DIARY_SEQ = #{diarySeq}
 	</update>
 
 	<delete id="deleteDiary" parameterType="HashMap">
@@ -60,6 +59,11 @@ from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{
 		select count(*) from
 		DIARY where MEMBER_SEQ = #{memberSeq}
 
+	</select>
+	
+	
+	<select id="diaryNickname" parameterType="int" resultType="String">
+		select MEMBER_NICKNAME from MEMBER where MEMBER_SEQ = #{memberSeq}
 	</select>
 	
 	<!-- 좋아요 -->
