@@ -97,9 +97,9 @@
 						수정</button></a>
 
 
-				<button onclick="delete_button();">일기 삭제</button>
+				<button onclick="delete_button()">일기 삭제</button>
 				
-				<button onclick="deleteImg_button();">첨부파일 삭제</button>
+				<button onclick="deleteImg_button()">첨부파일 삭제</button>
 				
 
 			</c:if>
@@ -153,12 +153,12 @@
 	<script type="text/javascript">
 		function delete_button() {
 
-			if (!confirm("정말 삭제하시겠습니까??")) { //확인
+			if (!confirm("정말 삭제하시겠습니까??")) { //아니오
 				return false;			
 
-			} else { //취소
+			} else { //예
 
-				location.gref="<c:url value='/diary/delete?diarySeq='/>"+${diaryList.diarySeq};
+				return location.href="<c:url value='/diary/delete?diarySeq='/>"+${diaryList.diarySeq};
 
 			}
 
@@ -166,12 +166,12 @@
 		
 		function deleteImg_button() {
 
-			if (!confirm("정말 삭제하시겠습니까??")) { //확인
+			if (!confirm("정말 삭제하시겠습니까??")) { //아니오
 				return false;			
 
-			} else { //취소
+			} else { //예
 
-				return location.href="c:url value='/diary/deleteImg?diarySeq='/>"+${diaryList.diarySeq};
+				return location.href="<c:url value='/diary/deleteImg?diarySeq='/>"+${diaryList.diarySeq};
 
 			}
 
