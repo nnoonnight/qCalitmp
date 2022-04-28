@@ -1,8 +1,7 @@
 package com.group.exam.diary.vo;
 
-import java.util.Date;
-
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 public class DiaryVo {
 	
@@ -16,6 +15,23 @@ public class DiaryVo {
 	private int memberSeq;
 	private int diaryLike;
 	private int diaryCount;
+	private MultipartFile img;
+	private String diaryImg;
+
+	
+	
+	public MultipartFile getImg() {
+		return img;
+	}
+	public void setImg(MultipartFile img) {
+		this.img = img;
+	}
+	public String getDiaryImg() {
+		return diaryImg;
+	}
+	public void setDiaryImg(String diaryImg) {
+		this.diaryImg = diaryImg;
+	}
 	public int getDiarySeq() {
 		return diarySeq;
 	}
@@ -64,8 +80,14 @@ public class DiaryVo {
 	public void setDiaryCount(int diaryCount) {
 		this.diaryCount = diaryCount;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "DiaryVo [diarySeq=" + diarySeq + ", diaryTitle=" + diaryTitle + ", diaryContent=" + diaryContent
+				+ ", diaryRegday=" + diaryRegday + ", diaryOpen=" + diaryOpen + ", memberSeq=" + memberSeq
+				+ ", diaryLike=" + diaryLike + ", diaryCount=" + diaryCount + ", img=" + img + ", diaryImg=" + diaryImg
+				+ "]";
+	}
+
 	
 	
 	

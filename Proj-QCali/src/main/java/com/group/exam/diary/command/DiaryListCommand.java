@@ -2,6 +2,8 @@ package com.group.exam.diary.command;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DiaryListCommand {
 	
 	private int diarySeq;
@@ -13,11 +15,24 @@ public class DiaryListCommand {
 	private String memberNickname;
 	private int diaryLike;
 	private int diaryCount;
+	private MultipartFile img;
+	private String diaryImg;
 	
+
 	
-	
-	
-	
+	public MultipartFile getImg() {
+		return img;
+	}
+	public void setImg(MultipartFile img) {
+		this.img = img;
+	}
+	public String getDiaryImg() {
+		return diaryImg;
+	}
+	public void setDiaryImg(String diaryImg) {
+		this.diaryImg = diaryImg;
+	}
+
 	public int getDiaryLike() {
 		return diaryLike;
 	}
@@ -77,7 +92,7 @@ public class DiaryListCommand {
 		return "DiaryListCommand [diarySeq=" + diarySeq + ", diaryTitle=" + diaryTitle + ", diaryContent="
 				+ diaryContent + ", diaryRegday=" + diaryRegday + ", diaryOpen=" + diaryOpen + ", memberSeq="
 				+ memberSeq + ", memberNickname=" + memberNickname + ", diaryLike=" + diaryLike + ", diaryCount="
-				+ diaryCount + "]";
+				+ diaryCount + ", img=" + img + ", diaryImg=" + diaryImg + "]";
 	}
 
 	

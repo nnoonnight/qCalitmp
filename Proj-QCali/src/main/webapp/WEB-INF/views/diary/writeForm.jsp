@@ -13,7 +13,7 @@
 
 
 
-	<form:form commandName="diaryData">
+	<form:form commandName="diaryData" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
 				<td>제목</td>
@@ -26,6 +26,10 @@
 				<td><form:textarea path="diaryContent" /> 
 				<form:errors path="diaryContent" /></td>
 
+			</tr>
+			<tr>
+				<td>파일 업로드</td>
+				<td><input type="file" name="img"></td>
 			</tr>
 			<tr>
 				<td>공개여부</td>

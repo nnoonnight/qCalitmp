@@ -31,13 +31,13 @@ public class DiaryServiceImpl implements DiaryService {
 
 	
 	@Override
-	public void updateDiary(String diaryTitle, String diaryContent, int diarySeq, String diaryOpen) {
+	public void updateDiary(String diaryTitle, String diaryContent, int diarySeq, String diaryOpen, String diaryImg) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("diaryTitle", diaryTitle);
 		map.put("diaryContent", diaryContent);
 		map.put("diarySeq", diarySeq);
 		map.put("diaryOpen", diaryOpen);
-		
+		map.put("diaryImg", diaryImg);
 		diaryDao.updateDiary(map);
 		
 		
@@ -55,6 +55,11 @@ public class DiaryServiceImpl implements DiaryService {
 		
 	}
 
+	@Override
+	public void deleteDiaryImg (int diarySeq) {
+		diaryDao.deleteDiaryImg(diarySeq);
+	}
+	
 	@Override
 	public List<DiaryListCommand> diaryList(Criteria cri, int memberSeq){
 		HashMap<String, Object> map = new HashMap<String, Object>();

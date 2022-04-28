@@ -52,5 +52,12 @@
     <!-- security -->
     	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 	
+	 <!-- 파일 업로드 설정 -->
+  	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 파일 사이즈 설정 가능 (byte단위 )-->
+	    <beans:property name="maxUploadSize" value="200000000" />
+	    <beans:property name="maxInMemorySize" value="200000000" />
+	</beans:bean>
+	
 	
 </beans:beans>

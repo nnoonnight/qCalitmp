@@ -37,7 +37,7 @@
 		</table>
 		<a href="<c:url value='/member/logout'/>"><button>로그아웃</button></a>
 	</c:if>
-	<form:form commandName="DiaryUpdateCommand">
+	<form:form commandName="DiaryUpdateCommand"  enctype="multipart/form-data">
 		<table border="1" >
 			<tr>
 				<td>제목</td>
@@ -50,6 +50,20 @@
 				<td><textarea name="diaryContent">${diaryList.diaryContent}</textarea> 
 				<form:errors path="diaryContent" /></td>
 
+			</tr>
+			<tr>
+				<td>파일 업로드</td>
+				<td>
+				<c:if test="${ empty diaryList.diaryImg ||  diaryList.diaryImg eq 'deleted'}">
+					<input type="file" name="img">
+				</c:if>
+				<c:if test="${ !empty diaryList.diaryImg}">
+					<img src="<c:url value='/resources/upload/${diaryList.diaryImg }'/>" width="200" >
+					<input type="file" name="img">
+				</c:if>
+
+				</td>
+		
 			</tr>
 			<tr>
 				<td>공개여부</td>

@@ -50,6 +50,7 @@
 			<th>일기seq</th>
 			<th>일기제목</th>
 			<th>일기내용</th>
+			<th>이미지</th>
 			<th>닉네임</th>
 			<th>일기 쓴 날짜</th>
 			<th>일기 좋아요</th>
@@ -69,7 +70,12 @@
 
 				<td>${diaryList.diaryTitle}</td>
 				<td>${diaryList.diaryContent}</td>
-
+				<c:if test="${!empty diaryList.diaryImg }">
+				<td><img src="<c:url value='/resources/upload/${diaryList.diaryImg }'/>" width="200" ></td>
+				</c:if>
+				<c:if test="${empty diaryList.diaryImg }">
+				<td>	</td>
+				</c:if>
 				<td>${diaryList.memberNickname}</td>
 				<td>${diaryList.diaryRegday}</td>
 				<td>${diaryList.diaryLike}</td>
@@ -91,9 +97,10 @@
 						수정</button></a>
 
 
-				<a href="<c:url value='/diary/delete?diarySeq=${diaryList.diarySeq}'/>"><button
-						onclick="button_event();">일기 삭제</button></a>
-
+				<button onclick="delete_button();">일기 삭제</button>
+				
+				<button onclick="deleteImg_button();">첨부파일 삭제</button>
+				
 
 			</c:if>
 
@@ -107,7 +114,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 		$(document).ready(function() {
-			var heartval = ${heart};
+			var heartval = ${diaryHeart};
 			if (heartval > 0) {
 				console.log(heartval);
 			    $("#heart").prop("src", '<c:url value="/resources"/>'+"/static/images/like2.png");
@@ -144,19 +151,32 @@
 	</script>
 
 	<script type="text/javascript">
-		function button_event() {
+		function delete_button() {
 
-			if (confirm("정말 삭제하시겠습니까??") == true) { //확인
-
-				document.form.submit();
+			if (!confirm("정말 삭제하시겠습니까??")) { //확인
+				return false;			
 
 			} else { //취소
 
-				return;
+				location.gref="<c:url value='/diary/delete?diarySeq='/>"+${diaryList.diarySeq};
+
+			}
+
+		}
+		
+		function deleteImg_button() {
+
+			if (!confirm("정말 삭제하시겠습니까??")) { //확인
+				return false;			
+
+			} else { //취소
+
+				return location.href="c:url value='/diary/deleteImg?diarySeq='/>"+${diaryList.diarySeq};
 
 			}
 
 		}
 	</script>
+
 
 </body>

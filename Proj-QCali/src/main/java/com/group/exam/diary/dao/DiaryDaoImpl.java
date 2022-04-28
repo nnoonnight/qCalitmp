@@ -33,6 +33,10 @@ public class DiaryDaoImpl implements DiaryDao {
 	}
 
 	@Override
+	public void deleteDiaryImg (int diarySeq) {
+		sqlSessionTemplate.update("deleteDiaryImg", diarySeq);		
+	}
+	@Override
 	public List<DiaryListCommand> diaryList(HashMap<String, Object> map) {
 		return sqlSessionTemplate.selectList("diaryList",map);
 	}

@@ -108,7 +108,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 		$(document).ready(function() {
-			var heartval = ${heart};
+			var heartval = ${boardHeart};
 			if (heartval > 0) {
 				console.log(heartval);
 			    $("#heart").prop("src", '<c:url value="/resources"/>'+"/static/images/like2.png");

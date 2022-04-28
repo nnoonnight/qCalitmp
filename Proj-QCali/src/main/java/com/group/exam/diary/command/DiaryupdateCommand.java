@@ -2,6 +2,7 @@ package com.group.exam.diary.command;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class DiaryUpdateCommand {
@@ -13,6 +14,23 @@ public class DiaryUpdateCommand {
 	@NotEmpty(message="내용을 입력해 주세요")
 	private String diaryContent;
 	private String diaryOpen;
+	private MultipartFile img;
+	private String diaryImg;
+	
+
+	
+	public MultipartFile getImg() {
+		return img;
+	}
+	public void setImg(MultipartFile img) {
+		this.img = img;
+	}
+	public String getDiaryImg() {
+		return diaryImg;
+	}
+	public void setDiaryImg(String diaryImg) {
+		this.diaryImg = diaryImg;
+	}
 	public int getDiarySeq() {
 		return diarySeq;
 	}
@@ -46,7 +64,8 @@ public class DiaryUpdateCommand {
 	@Override
 	public String toString() {
 		return "DiaryUpdateCommand [diarySeq=" + diarySeq + ", memberSeq=" + memberSeq + ", diaryTitle=" + diaryTitle
-				+ ", diaryContent=" + diaryContent + ", diaryOpen=" + diaryOpen + "]";
+				+ ", diaryContent=" + diaryContent + ", diaryOpen=" + diaryOpen + ", img=" + img + ", diaryImg="
+				+ diaryImg + "]";
 	}
 	
 	

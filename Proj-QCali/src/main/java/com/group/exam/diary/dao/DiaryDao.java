@@ -17,6 +17,8 @@ public interface DiaryDao {
 	
 	public void deleteDiary (HashMap<String, Integer> map); 
 	
+	public void deleteDiaryImg (int diarySeq); 
+	
 	public List<DiaryListCommand> diaryList(HashMap<String, Object> map);
 		
 	public DiaryListCommand diaryDetail (int diarySeq);
