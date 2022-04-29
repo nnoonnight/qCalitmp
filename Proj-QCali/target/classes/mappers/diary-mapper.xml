@@ -6,12 +6,23 @@
 
 
 	<insert id="insertDiary" parameterType="com.group.exam.diary.vo.DiaryVo">
+	<if test="diaryImg != null" >
 		insert into DIARY
 		(DIARY_SEQ, DIARY_TITLE, DIARY_CONTENT,DIARY_REG_DAY, DIARY_OPEN, MEMBER_SEQ, DIARY_IMG)
 		values
 		(DIARY_SEQ.nextval, #{diaryTitle}, #{diaryContent}, SYSDATE, #{diaryOpen},
 		(select MEMBER_SEQ from MEMBER where MEMBER_SEQ = #{memberSeq}), #{diaryImg})
+	</if>
+	<if test="diaryImg == null" >
+		insert into DIARY
+		(DIARY_SEQ, DIARY_TITLE, DIARY_CONTENT,DIARY_REG_DAY, DIARY_OPEN, MEMBER_SEQ, DIARY_IMG)
+		values
+		(DIARY_SEQ.nextval, #{diaryTitle}, #{diaryContent}, SYSDATE, #{diaryOpen},
+		(select MEMBER_SEQ from MEMBER where MEMBER_SEQ = #{memberSeq}), NULL)
+	</if>
 	</insert>	
+	
+	
 	
 	<update id="updateDiary" parameterType="HashMap">
 		update DIARY set

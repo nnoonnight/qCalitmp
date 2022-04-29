@@ -87,11 +87,12 @@ public class DiaryController {
 		
 		//공개여부 세팅
 		String diaryOpen = request.getParameter("open");
-		
 		diaryVo.setDiaryOpen(diaryOpen);
+		
 		// 세션에서 멤버의 mSeq 를 diaryVo에 셋팅
 		diaryVo.setMemberSeq(loginMember.getMemberSeq());
 
+		
 		//첨부파일 세팅
 		MultipartFile file = diaryVo.getImg();
 		
@@ -101,17 +102,25 @@ public class DiaryController {
 		//파일명 중 확장자만 추출
 		String originalFileExtension = FilenameUtils.getExtension(originalFileName); //확장자 구하기
 		
+		if(originalFileExtension!="") { //확장자가있으면 (파일을 첨부했으면
+		System.out.println("originalFileExtension 확인         :"+originalFileExtension);
+		
 		//저장할때 쓸 파일명 랜덤생성 + 확장자
 		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "")+"."+originalFileExtension;
 		
 		//파일 저장을 위한 File 객체
 		String rootPath = request.getSession().getServletContext().getRealPath("/");  
 
+		//저장경로
 	    String attachPath = "resources/upload/";
 		file.transferTo(new File(rootPath + attachPath +storedFileName));
 	
-		
 		diaryVo.setDiaryImg(storedFileName); //저장할 파일 (랜덤생성된)이름을 vo에 셋팅
+
+			
+		}else if(originalFileExtension=="") { //확장자가없으면 (파일 미첨부시
+			diaryVo.setDiaryImg(null);
+		}
 		
 
 		// insert
@@ -173,13 +182,18 @@ public class DiaryController {
 		@GetMapping(value = "/detail")
 		public String diaryDetail(@RequestParam int diarySeq, Model model, HttpSession session) {
 
+			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
+			if(loginMember == null) {
+				return "errors/notLoginError"; //로그인 안되어 있을 때
+			}
+						
+			
 			diaryService.diaryCountup(diarySeq);
 
 			DiaryListCommand list = diaryService.diaryDetail(diarySeq);
 			boolean myArticle = false;
 			// 세션 값 loginMember에 저장
 
-			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
 
 			if (loginMember != null) {
 				// 세션에서 멤버의 mSeq 를 boardVo에 셋팅
@@ -228,7 +242,6 @@ public class DiaryController {
 				command.setHeart(1);
 			}
 
-			// String result = Integer.toString(heart);
 
 			return command.getHeart();
 
@@ -341,8 +354,6 @@ public class DiaryController {
 					LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
 
 					if (loginMember != null) {
-						// 세션에서 멤버의 mSeq 를 boardVo에 셋팅
-						int memberSeq = loginMember.getMemberSeq();
 						diaryService.deleteDiaryImg(diarySeq);
 						System.out.println("삭제 성공");
 					} else {
