@@ -85,21 +85,21 @@ from MEMBER M join DIARY D on M.MEMBER_SEQ = D.MEMBER_SEQ where D.DIARY_SEQ = #{
 	<!-- 좋아요 -->
 	
 	<insert id="createLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
-		insert into HEART (HEART_SEQ, DIARY_SEQ, MEMBER_SEQ) values (H_SEQ.NEXTVAL, #{diarySeq}, #{memberSeq})
+		insert into DIARYHEART (DHEART_SEQ, DIARY_SEQ, MEMBER_SEQ) values (DH_SEQ.NEXTVAL, #{diarySeq}, #{memberSeq})
 	
 	</insert>
 	
 	<delete id="deleteLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
-		delete from HEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq} 
+		delete from DIARYHEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq} 
 	</delete>
 	
 	
 	<update id="updateLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo">
-		update DIARY set DIARY_LIKE = (select count(*) from HEART where DIARY_SEQ = #{diarySeq}) where DIARY_SEQ = #{diarySeq}
+		update DIARY set DIARY_LIKE = (select count(*) from DIARYHEART where DIARY_SEQ = #{diarySeq}) where DIARY_SEQ = #{diarySeq}
 	</update>
 	
 	<select id="getLikeDiary" parameterType="com.group.exam.diary.vo.DiaryHeartVo" resultType="Integer">
-		select count(HEART_SEQ) from HEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq}
+		select count(DHEART_SEQ) from DIARYHEART where DIARY_SEQ = #{diarySeq} and MEMBER_SEQ = #{memberSeq}
 	</select>
 	
 

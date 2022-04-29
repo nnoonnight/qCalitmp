@@ -2,7 +2,7 @@ package com.group.exam.diary.command;
 
 public class DiaryLikeCommand{
 	private int diarySeq;
-	private int heart;
+	private int diaryHeart;
 	
 	
 	public int getDiarySeq() {
@@ -11,11 +11,11 @@ public class DiaryLikeCommand{
 	public void setDiarySeq(int diarySeq) {
 		this.diarySeq = diarySeq;
 	}
-	public int getHeart() {
-		return heart;
+	public int getDiaryHeart() {
+		return diaryHeart;
 	}
-	public void setHeart(int heart) {
-		this.heart = heart;
+	public void setDiaryHeart(int diaryHeart) {
+		this.diaryHeart = diaryHeart;
 	}
 
 	

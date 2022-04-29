@@ -129,7 +129,7 @@
 				console.log(that.prop('name'));
 				var sendData = {
 					'diarySeq' : '${diarySeq}',
-					'heart' : that.prop('name'),
+					'diaryHeart' : that.prop('name'),
 				};
 				$.ajax({
 					url : '<c:url value="/diary/heart"/>',

@@ -232,17 +232,17 @@ public class DiaryController {
 			likeVo.setDiarySeq(command.getDiarySeq());
 			likeVo.setMemberSeq(loginMember.getMemberSeq());
 
-			if (command.getHeart() >= 1) {
+			if (command.getDiaryHeart() >= 1) {
 				diaryService.deleteDiaryLike(likeVo);
-				command.setHeart(0);
+				command.setDiaryHeart(0);
 			} else {
 
 				diaryService.insertDiaryLike(likeVo);
-				command.setHeart(1);
+				command.setDiaryHeart(1);
 			}
 
 
-			return command.getHeart();
+			return command.getDiaryHeart();
 
 		}
 

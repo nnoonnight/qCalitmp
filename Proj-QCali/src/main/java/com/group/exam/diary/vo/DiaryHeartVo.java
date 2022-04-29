@@ -2,15 +2,16 @@ package com.group.exam.diary.vo;
 
 public class DiaryHeartVo {
 	
-	private int heartSeq;
+	private int dHeartSeq;
 	private int diarySeq;
 	private int memberSeq;
 	
-	public int getHeartSeq() {
-		return heartSeq;
+
+	public int getdHeartSeq() {
+		return dHeartSeq;
 	}
-	public void setHeartSeq(int heartSeq) {
-		this.heartSeq = heartSeq;
+	public void setdHeartSeq(int dHeartSeq) {
+		this.dHeartSeq = dHeartSeq;
 	}
 	public int getDiarySeq() {
 		return diarySeq;
@@ -26,9 +27,9 @@ public class DiaryHeartVo {
 	}
 	@Override
 	public String toString() {
-		return "DiaryHeartVo [heartSeq=" + heartSeq + ", diarySeq=" + diarySeq + ", memberSeq=" + memberSeq + "]";
+		return "DiaryHeartVo [dHeartSeq=" + dHeartSeq + ", diarySeq=" + diarySeq + ", memberSeq=" + memberSeq + "]";
 	}
-	
+
 
 	
 	
