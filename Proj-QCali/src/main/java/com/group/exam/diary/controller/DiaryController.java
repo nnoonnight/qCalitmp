@@ -116,7 +116,6 @@ public class DiaryController {
 		file.transferTo(new File(rootPath + attachPath +storedFileName));
 	
 		diaryVo.setDiaryImg(storedFileName); //저장할 파일 (랜덤생성된)이름을 vo에 셋팅
-
 			
 		}else if(originalFileExtension=="") { //확장자가없으면 (파일 미첨부시
 			diaryVo.setDiaryImg(null);
@@ -251,8 +250,8 @@ public class DiaryController {
 		
 		
 		// 게시글 수정
-		@GetMapping(value = "/edit/{diarySeqTest}")
-		public String diaryEdit(@PathVariable int diarySeqTest, @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, Model model, HttpSession session) {
+		@GetMapping(value = "/edit/{diarySeq}")
+		public String diaryEdit(@PathVariable int diarySeq, @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, Model model, HttpSession session) {
 
 //			//login seq 와 요청된(작성)seq 비교
 //			if (diarySeqTest != updateCommand.getDiarySeq()) {
@@ -260,7 +259,7 @@ public class DiaryController {
 //				return "errors/memberAuthErrorDiary";
 //			}
 			LoginCommand loginMember = (LoginCommand) session.getAttribute("memberLogin");
-			DiaryListCommand list = diaryService.diaryDetail(diarySeqTest);
+			DiaryListCommand list = diaryService.diaryDetail(diarySeq);
 			if(loginMember.getMemberSeq()==list.getMemberSeq()) {
 				model.addAttribute("diaryList", list);
 				return "diary/editForm";				
@@ -270,12 +269,12 @@ public class DiaryController {
 		}
 
 		// 게시글 수정
-		@PostMapping(value = "/edit/{diarySeqTest}")
-		public String diaryEdit(@PathVariable int diarySeqTest, @Valid @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, BindingResult bindingResult,Model model,
+		@PostMapping(value = "/edit/{diarySeq}")
+		public String diaryEdit(@PathVariable int diarySeq, @Valid @ModelAttribute("DiaryUpdateCommand") DiaryUpdateCommand updateCommand, BindingResult bindingResult,Model model,
 				 HttpSession session, HttpServletRequest request) throws IllegalStateException, IOException {			
 			if (bindingResult.hasErrors()) {
 				//공백일 경우 내용 다시 띄워주기
-				DiaryListCommand list = diaryService.diaryDetail(diarySeqTest);
+				DiaryListCommand list = diaryService.diaryDetail(diarySeq);
 				model.addAttribute("diaryList", list);
 				return "diary/editForm";
 			}		
@@ -311,7 +310,7 @@ public class DiaryController {
 				
 				updateCommand.setDiaryImg(storedFileName); //저장할 파일 (랜덤생성된)이름을 vo에 셋팅
 			
-				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeqTest, updateCommand.getDiaryOpen(),updateCommand.getDiaryImg());
+				diaryService.updateDiary(updateCommand.getDiaryTitle(), updateCommand.getDiaryContent(), diarySeq, updateCommand.getDiaryOpen(),updateCommand.getDiaryImg());
 			
 				System.out.println(" 수정 성공");
 			} else {
@@ -346,7 +345,7 @@ public class DiaryController {
 		}
 
 		
-		// 게시글 삭제
+		// 첨부된 이미지만 삭제
 				@GetMapping(value = "/deleteImg")
 				public String diaryDeleteImg(@RequestParam int diarySeq, Model model, HttpSession session, Criteria cri) {
 
